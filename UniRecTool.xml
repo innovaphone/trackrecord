@@ -48,7 +48,7 @@
   			<pbx-prompt url="$ctrl" sec="5" repeat="true" /> 
 		</while>
 		<lib-strcat out-string="$Track" string="Track" string2="$Track"/> 
-		<lib-strcat out-string="$Track" string="$Track" string2=".G711a"/> 
+		<lib-strcat out-string="$Track" string="$Track" string2=".g711a"/> 
 		<store-get root="" name="$Track" out-url="$file"/>
 	</function>
 	<function define="TrackRecord">
@@ -56,11 +56,11 @@
 			<pbx-getdtmfdigit out-dtmf="$dtmf" /> 
 			<assign out="$recend-ok" value="true"/>
   		</event>
-		<store-get root="" name="beep.G711a" out-url="$ctrl"/>
+		<store-get root="" name="beep.g711a" out-url="$ctrl"/>
 		<pbx-prompt url="$ctrl" repeat="false" />  
 		<while notcond="$recend-ok">
 	 		<pbx-record url="$file" />
 		</while>
 	</function>
 </voicemail>
-<!-- Universal Track Recording Tool wiki-src/xml/TrackRecord 1,0,1,0 (C) innovaphone AG 2010-2017 -->
+<!-- Universal Track Recording Tool wiki-src/xml/TrackRecord 1,0,2,0 (C) innovaphone AG 2010-2019 -->
