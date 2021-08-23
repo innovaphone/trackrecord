@@ -37,7 +37,7 @@
  			 </switch>
 			 <lib-strcat string="$Track" string2="$dtmf" out-string="$Track" /> 
   		</event>
-		<store-get root="" name="Wellcome.G711a" out-url="$ctrl"/>
+		<store-get root="" name="Wellcome.g711a" out-url="$ctrl"/>
         	<pbx-prompt url="$ctrl" repeat="false"/>
 		<while notcond="$dial-ok">
 			<store-get root="" name="Track8765.g711a" out-url="$ctrl" /> 
@@ -63,4 +63,4 @@
 		</while>
 	</function>
 </voicemail>
-<!-- Universal Track Recording Tool wiki-src/xml/TrackRecord 1,0,0,0 (C) innovaphone AG 2010-2011 -->
+<!-- Universal Track Recording Tool wiki-src/xml/TrackRecord 1,0,1,0 (C) innovaphone AG 2010-2017 -->
