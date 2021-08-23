@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<voicemail>
+<!-- innovaphone Universal Recording Too == inno srl kwa 2011 V100 -->
+	<function define="Main">
+		<event type="timer" name="vbguard">
+	       		<pbx-disc/>
+		</event>
+		<timer name="vbguard" sec="100"/>  
+		<while notcond="$MMain-ok">
+			<call name="MainMenu" />
+	      		<if notcond="$Play">
+				<call name="TrackRecord" />
+			</if>
+			<else>
+                           	<pbx-prompt url="$file" repeat="false" />  
+                        </else>
+			<timer name="vbguard" sec="100"/>
+		</while>
+	 	<pbx-disc/>
+	</function>
+	<function define="MainMenu">
+		<assign out="$dial-ok" value="false"/>
+		<assign out="$Play" value="false"/>
+		<assign out="$recend-ok" value="false"/>
+		<assign out="$Track" value=""/>
+		<event type="dtmf" block="false">
+			<pbx-getdtmfdigit out-dtmf="$dtmf" /> 
+			<switch var="$dtmf">
+				<case equal="#">
+					<assign out="$dial-ok" value="true"/>
+	  				<return /> 
+				</case>
+				<case equal="*">
+					<assign out="$Play" value="true"/>
+	  				<return /> 
+				</case>
+ 			 </switch>
+			 <lib-strcat string="$Track" string2="$dtmf" out-string="$Track" /> 
+  		</event>
+		<store-get root="" name="Wellcome.G711a" out-url="$ctrl"/>
+        	<pbx-prompt url="$ctrl" repeat="false"/>
+		<while notcond="$dial-ok">
+			<store-get root="" name="Track8765.g711a" out-url="$ctrl" /> 
+  			<pbx-prompt url="$ctrl" repeat="false" /> 
+			<store-get root="" name="Track9999.g711a" out-url="$ctrl" /> 
+  			<pbx-prompt url="$ctrl" repeat="false" />
+  			<store-get root="" name="silence.g711a" out-url="$ctrl" /> 
+  			<pbx-prompt url="$ctrl" sec="5" repeat="true" /> 
+		</while>
+		<lib-strcat out-string="$Track" string="Track" string2="$Track"/> 
+		<lib-strcat out-string="$Track" string="$Track" string2=".G711a"/> 
+		<store-get root="" name="$Track" out-url="$file"/>
+	</function>
+	<function define="TrackRecord">
+		<event type="dtmf" block="false">
+			<pbx-getdtmfdigit out-dtmf="$dtmf" /> 
+			<assign out="$recend-ok" value="true"/>
+  		</event>
+		<store-get root="" name="beep.G711a" out-url="$ctrl"/>
+		<pbx-prompt url="$ctrl" repeat="false" />  
+		<while notcond="$recend-ok">
+	 		<pbx-record url="$file" />
+		</while>
+	</function>
+</voicemail>
+<!-- Universal Track Recording Tool wiki-src/xml/TrackRecord 1,0,0,0 (C) innovaphone AG 2010-2011 -->
